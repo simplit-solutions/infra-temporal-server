@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: temporal-server
-          image: docker.io/temporalio/server:1.29.1
+          image: docker.io/temporalio/auto-setup:1.29.1
           imagePullPolicy: IfNotPresent
           securityContext:
             runAsNonRoot: true

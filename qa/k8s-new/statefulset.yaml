@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: temporal-server
+  namespace: default
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  serviceName: temporal-server
+  replicas: 1
+  selector:
+    matchLabels:
+      app: temporal-server
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
+      labels:
+        app: temporal-server
+    spec:
+      containers:
+        - name: temporal-server
+          image: docker.io/temporalio/server:1.29.1
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: true
+            privileged: true
+          envFrom:
+            - secretRef:
+                name: temporal-server-qa
+          ports:
+            - name: http
+              containerPort: 80
+          resources:
+            limits:
+              cpu: "0.8"
+              memory: 1200Mi
+            requests:
+              cpu: "0.5"
+              memory: 1000Mi
+          volumeMounts:
+            - name: cache-volume
+              mountPath: /usr/src/app/cache
+  volumeClaimTemplates:
+    - metadata:
+        name: cache-volume
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi

@@ -50,11 +50,11 @@ spec:
             failureThreshold: 3
           resources:
             limits:
-              cpu: "0.8"
-              memory: 1200Mi
+              cpu: "1.5"
+              memory: 4000Mi
             requests:
-              cpu: "0.5"
-              memory: 1000Mi
+              cpu: "1"
+              memory: 2000Mi
           volumeMounts:
             - name: cache-volume
               mountPath: /usr/src/app/cache

@@ -2,7 +2,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: temporal-server
-  namespace: default
+  namespace: agent-simplit
 spec:
   minReplicas: 1
   maxReplicas: 2
